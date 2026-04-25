@@ -1,9 +1,18 @@
-//CRUD USUARIOS
+# API REST - E-commerce Insumos Médicos
 
-// Obtener USUARIOS
+---
+
+## CRUD USUARIOS
+
+### Obtener usuarios
+
+```http
 GET /usuarios
+```
 
-Response:
+**Response:**
+
+```json
 [
   {
     "id_usuario": 1,
@@ -12,9 +21,19 @@ Response:
     "email": "juan@gmail.com"
   }
 ]
+```
 
+---
+
+### Crear usuario
+
+```http
 POST /usuarios
-Request:
+```
+
+**Request:**
+
+```json
 {
   "nombre": "Juan",
   "apellido": "Pérez",
@@ -24,55 +43,95 @@ Request:
   "region": "RM",
   "comuna": "Santiago"
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Usuario creado correctamente"
 }
+```
 
+---
 
+### Actualizar usuario
+
+```http
 PUT /usuarios/{id}
+```
 
-Request:
+**Request:**
+
+```json
 {
   "telefono": "912345678"
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Usuario actualizado"
 }
+```
 
+---
+
+### Eliminar usuario
+
+```http
 DELETE /usuarios/{id}
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Usuario eliminado"
 }
+```
 
+---
 
-//LOGIN
+## LOGIN
 
+### 🔹 Iniciar sesión
+
+```http
 POST /login
+```
 
-Request:
+**Request:**
+
+```json
 {
   "email": "juan@gmail.com",
   "password": "1234"
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Login exitoso",
   "id_usuario": 1
 }
+```
 
+## PRODUCTOS
 
-//PRODUCTOS
+### Obtener productos
 
+```http
 GET /productos
+```
 
-Response:
+**Response:**
+
+```json
 [
   {
     "id_producto": 1,
@@ -82,15 +141,27 @@ Response:
     "marca": "MedTech"
   }
 ]
+```
 
--
+---
 
+### Obtener producto por ID
+
+```http
 GET /productos/{id}
+```
 
+---
 
+### Crear producto
+
+```http
 POST /productos
+```
 
-Request:
+**Request:**
+
+```json
 {
   "nombre_producto": "Termómetro digital",
   "descripcion": "Medidor de oxígeno",
@@ -98,85 +169,154 @@ Request:
   "modelo": "OX200",
   "marca": "HealthCorp"
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Producto creado correctamente"
 }
+```
 
+---
+
+### Actualizar producto
+
+```http
 PUT /productos/{id}
+```
 
-Request:
+**Request:**
+
+```json
 {
   "precio": 12000
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Producto actualizado"
 }
+```
 
+---
+
+### Eliminar producto
+
+```http
 DELETE /productos/{id}
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Producto eliminado"
 }
+```
 
-//CARRITO
+---
 
+## CARRITO
 
+### Crear carrito
+
+```http
 POST /carrito
+```
 
-Request:
+**Request:**
+
+```json
 {
   "id_usuario": 1
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Carrito creado"
 }
+```
 
+---
 
+### Obtener carrito
+
+```http
 GET /carrito/{id}
+```
 
+---
 
+### Agregar producto al carrito
+
+```http
 POST /carrito/agregar
+```
 
-Request:
+**Request:**
+
+```json
 {
   "id_carrito": 1,
   "id_producto": 2,
   "cantidad": 3
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Producto agregado al carrito"
 }
+```
 
+---
 
+### Eliminar producto del carrito
+
+```http
 DELETE /carrito/eliminar
+```
 
-Request:
+**Request:**
+
+```json
 {
   "id_carrito": 1,
   "id_producto": 2
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "mensaje": "Producto eliminado del carrito"
 }
+```
 
+---
 
-//BOLETA
+## BOLETA
 
+### Crear boleta
 
+```http
 POST /boleta
+```
 
-Request:
+**Request:**
+
+```json
 {
   "id_usuario": 1,
   "productos": [
@@ -186,18 +326,29 @@ Request:
     }
   ]
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "cod_boleta": "B001",
   "total_boleta": 10000
 }
+```
 
+### Obtener boleta
+
+```http
 GET /boleta/{cod_boleta}
+```
 
-Response:
+**Response:**
+
+```json
 {
   "cod_boleta": "B001",
   "total_boleta": 10000,
   "estado": "pagado"
 }
+```
