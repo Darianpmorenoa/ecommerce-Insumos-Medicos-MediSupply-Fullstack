@@ -1,11 +1,11 @@
 /**
  * @api {post} /api/boleta Crear Compra
- * @apiDescription Genera la boleta final vinculada al RUT del usuario.
+ * @apiDescription Genera la boleta y procesa el pago.
  */
 const createOrder = {
     request_body: {
-      rut_usuario: "12345678-9",
-      metodo_pago: "Transbank",
+      rut_cliente: "12345678-9",
+      id_pago: 1,
       productos: [
         { id_producto: 1, cantidad: 2 }
       ]
@@ -16,7 +16,8 @@ const createOrder = {
   };
   
   /**
-   * @api {get} /api/admin/boletas Listar Ventas (DataTable)
+   * @api {get} /api/admin/boletas Dashboard de Ventas
+   * @apiDescription Endpoint para alimentar la DataTable de gestión de ventas.
    */
   const getAdminOrders = {
     response: [

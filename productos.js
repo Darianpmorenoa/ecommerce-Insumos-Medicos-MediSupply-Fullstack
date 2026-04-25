@@ -1,6 +1,6 @@
 /**
  * @api {get} /api/productos Listar Catálogo
- * @apiDescription Retorna todos los productos con marca y modelo como atributos propios.
+ * @apiDescription Retorna todos los insumos con marca y modelo integrados.
  */
 const getProducts = {
     response: [
@@ -18,7 +18,7 @@ const getProducts = {
   };
   
   /**
-   * @api {post} /api/productos Agregar Producto (ADMIN)
+   * @api {post} /api/productos Agregar Producto (Admin)
    */
   const addProduct = {
     request_body: {
@@ -27,15 +27,21 @@ const getProducts = {
       precio: 15000,
       stock: 10,
       marca: "ChoiceMMed",
-      modelo: "M123",
-      imagen_url: "oximetro.png"
+      modelo: "M123"
     }
   };
   
   /**
-   * @api {put} /api/productos/:id Actualizar Producto
+   * @api {put} /api/productos/:id Actualizar Stock/Precio
    */
   const updateProduct = {
-    params: { id: 1 },
-    request_body: { precio: 15500, stock: 15 }
+    params: { id: "Number" },
+    payload: { precio: 15500, stock: 15 }
+  };
+  
+  /**
+   * @api {delete} /api/productos/:id Eliminar Producto
+   */
+  const deleteProduct = {
+    response: { mensaje: "Producto eliminado con éxito" }
   };

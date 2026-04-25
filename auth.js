@@ -10,7 +10,7 @@ const register = {
       telefono: 987654321,
       email: "juan@gmail.com",
       password: "hashed_password",
-      direccion: "Calle Falsa 123",
+      direccion: "Calle Principal 123",
       comuna: "Puente Alto",
       region: "Metropolitana"
     },
@@ -36,3 +36,4 @@ const register = {
       }
     }
   };
+  
