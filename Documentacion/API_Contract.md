@@ -2,36 +2,41 @@
 
 ---
 
-## CRUD USUARIOS
+## 1. AUTENTICACION
 
-### Obtener usuarios
+### POST /login
 
-```http
-GET /usuarios
-```
-
-**Response:**
+Request:
 
 ```json
-[
-  {
-    "id_usuario": 1,
-    "nombre": "Juan",
-    "apellido": "Pérez",
-    "email": "juan@gmail.com"
-  }
-]
+{
+  "email": "juan@gmail.com",
+  "password": "1234"
+}
+```
+
+Response:
+
+```json
+{
+  "mensaje": "Login exitoso",
+  "id_usuario": 1
+}
 ```
 
 ---
 
-### Crear usuario
+## 2. USUARIOS
 
-```http
-POST /usuarios
-```
+### GET /usuarios
 
-**Request:**
+---
+
+### GET /usuarios/{id}
+
+---
+
+### POST /usuarios
 
 ```json
 {
@@ -45,23 +50,9 @@ POST /usuarios
 }
 ```
 
-**Response:**
-
-```json
-{
-  "mensaje": "Usuario creado correctamente"
-}
-```
-
 ---
 
-### Actualizar usuario
-
-```http
-PUT /usuarios/{id}
-```
-
-**Request:**
+### PUT /usuarios/{id}
 
 ```json
 {
@@ -69,125 +60,38 @@ PUT /usuarios/{id}
 }
 ```
 
-**Response:**
+---
 
-```json
-{
-  "mensaje": "Usuario actualizado"
-}
-```
+### DELETE /usuarios/{id}
 
 ---
 
-### Eliminar usuario
+## 3. PRODUCTOS
 
-```http
-DELETE /usuarios/{id}
-```
-
-**Response:**
-
-```json
-{
-  "mensaje": "Usuario eliminado"
-}
-```
+### GET /productos
 
 ---
 
-## LOGIN
-
-### 🔹 Iniciar sesión
-
-```http
-POST /login
-```
-
-**Request:**
-
-```json
-{
-  "email": "juan@gmail.com",
-  "password": "1234"
-}
-```
-
-**Response:**
-
-```json
-{
-  "mensaje": "Login exitoso",
-  "id_usuario": 1
-}
-```
-
-## PRODUCTOS
-
-### Obtener productos
-
-```http
-GET /productos
-```
-
-**Response:**
-
-```json
-[
-  {
-    "id_producto": 1,
-    "nombre_producto": "Termómetro digital",
-    "precio": 5000,
-    "modelo": "T100",
-    "marca": "MedTech"
-  }
-]
-```
+### GET /productos/{id}
 
 ---
 
-### Obtener producto por ID
-
-```http
-GET /productos/{id}
-```
-
----
-
-### Crear producto
-
-```http
-POST /productos
-```
-
-**Request:**
+### POST /productos
 
 ```json
 {
   "nombre_producto": "Termómetro digital",
   "descripcion": "Medidor de oxígeno",
+  "imagen": "img.jpg",
   "precio": 5000,
-  "modelo": "OX200",
+  "categoria": "Salud",
   "marca": "HealthCorp"
-}
-```
-
-**Response:**
-
-```json
-{
-  "mensaje": "Producto creado correctamente"
 }
 ```
 
 ---
 
-### Actualizar producto
-
-```http
-PUT /productos/{id}
-```
-
-**Request:**
+### PUT /productos/{id}
 
 ```json
 {
@@ -195,41 +99,15 @@ PUT /productos/{id}
 }
 ```
 
-**Response:**
+---
 
-```json
-{
-  "mensaje": "Producto actualizado"
-}
-```
+### DELETE /productos/{id}
 
 ---
 
-### Eliminar producto
+## 4. CARRITO
 
-```http
-DELETE /productos/{id}
-```
-
-**Response:**
-
-```json
-{
-  "mensaje": "Producto eliminado"
-}
-```
-
----
-
-## CARRITO
-
-### Crear carrito
-
-```http
-POST /carrito
-```
-
-**Request:**
+### POST /carrito
 
 ```json
 {
@@ -237,31 +115,13 @@ POST /carrito
 }
 ```
 
-**Response:**
+---
 
-```json
-{
-  "mensaje": "Carrito creado"
-}
-```
+### GET /carrito/{id_carrito}
 
 ---
 
-### Obtener carrito
-
-```http
-GET /carrito/{id}
-```
-
----
-
-### Agregar producto al carrito
-
-```http
-POST /carrito/agregar
-```
-
-**Request:**
+### POST /carrito/agregar
 
 ```json
 {
@@ -271,23 +131,21 @@ POST /carrito/agregar
 }
 ```
 
-**Response:**
+---
+
+### PUT /carrito/actualizar
 
 ```json
 {
-  "mensaje": "Producto agregado al carrito"
+  "id_carrito": 1,
+  "id_producto": 2,
+  "cantidad": 5
 }
 ```
 
 ---
 
-### Eliminar producto del carrito
-
-```http
-DELETE /carrito/eliminar
-```
-
-**Request:**
+### DELETE /carrito/eliminar
 
 ```json
 {
@@ -296,59 +154,67 @@ DELETE /carrito/eliminar
 }
 ```
 
-**Response:**
+---
+
+## 5. CHECKOUT (IMPORTANTE PARA LA COMPRA)
+
+### POST /checkout
 
 ```json
 {
-  "mensaje": "Producto eliminado del carrito"
+  "id_carrito": 1,
+  "metodo_pago": "tarjeta"
+}
+```
+
+Response:
+
+```json
+{
+  "mensaje": "Compra realizada",
+  "cod_boleta": "B001"
 }
 ```
 
 ---
 
-## BOLETA
+## 6. BOLETA
 
-### Crear boleta
+### GET /boletas
 
-```http
-POST /boleta
-```
+---
 
-**Request:**
+### GET /boleta/{cod_boleta}
 
 ```json
 {
-  "id_usuario": 1,
+  "cod_boleta": "B001",
+  "fecha": "2026-04-26",
+  "total": 10000,
+  "estado": "pagado",
   "productos": [
     {
       "id_producto": 1,
-      "cantidad": 2
+      "cantidad": 2,
+      "precio_unitario": 5000
     }
   ]
 }
 ```
 
-**Response:**
+---
+
+### GET /mis-boletas/{id_usuario}
+
+---
+
+### PUT /boleta/{cod_boleta}
 
 ```json
 {
-  "cod_boleta": "B001",
-  "total_boleta": 10000
+  "estado": "enviado"
 }
 ```
 
-### Obtener boleta
+---
 
-```http
-GET /boleta/{cod_boleta}
-```
-
-**Response:**
-
-```json
-{
-  "cod_boleta": "B001",
-  "total_boleta": 10000,
-  "estado": "pagado"
-}
-```
