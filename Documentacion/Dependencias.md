@@ -1,16 +1,14 @@
-FRONTED:
+FRONT-END:
 
 react-bootstrap
 Bootstrap
 React-router-dom
 fontawesome
+DataTables
+Sweet Alerts 2
 
 
-
-
-
-
-BACKEND:
+BACK-END:
 
 express
 jsonwebtoken

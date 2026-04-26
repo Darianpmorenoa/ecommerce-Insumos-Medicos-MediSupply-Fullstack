@@ -24,6 +24,8 @@ El entorno de desarrollo se ha configurado con las siguientes tecnologías:
 * **Context API**: Manejo del estado global de la aplicación (Carrito, Auth).
 * **React-Bootstrap / Bootstrap**: Frameworks para el diseño responsivo y estilizado.
 * **Fontawesome**: Librería de iconos para la interfaz visual.
+* **Sweet alerts 2**: Librería de alertas para la interfaz visual.
+* **Datatables**: Librería de tablas para la interfaz visual.
 
 ---
 
@@ -31,17 +33,24 @@ El entorno de desarrollo se ha configurado con las siguientes tecnologías:
 
 El sistema diferencia el acceso y las funcionalidades según el rol del usuario:
 
-### 🌐 Vistas Públicas
-* **Home / Landing Page**: Presentación de la marca y acceso a categorías.
-* **Catálogo de Productos**: Galería con búsqueda y filtros por marca y modelo.
+### 🌐 Vistas Usuario
+* **Home / Landing Page**: Presentación de la marca y acceso a categorías y productos.
+* **Categorías Productos**: Galería de categorías de productos.
+* **Listado de Productos**: Galería de productos según categoría.
+* **Detalle Producto**: Información detallada de un producto específico.
 * **Registro / Login**: Flujo de acceso y validación de usuarios.
+* **Perfil**: Información personal de usuario registrado.
+* **Carro de Compras**: Resumen de productos seleccionados por el usuario.
+* **Pasarela de Pago**: Resumen y formulario de orden de compra.
+* **Agradecimiento**: Comprueba que la orden fue realizada efectivamente y descarga opcional de comprobante.
 
-### 🔒 Vistas Privadas (Requieren Autenticación)
-* **Perfil de Usuario**: Gestión de datos y seguimiento de pedidos.
-* **Carrito de Compras**: Resumen de selección y procesamiento de pago.
-* **Dashboard Admin**: Panel exclusivo para la gestión de inventario (CRUD de productos).
-* **Gestión de Ventas**: Monitoreo de boletas emitidas mediante DataTables.
-* **Administración de Clientes**: Listado de contacto y actividad de usuarios.
+
+### 🔒 Vistas Adminitrativas
+* **Login**: Acceso limitado de la plataforma administrativa.
+* **Home**: Primer acceso al sitio, información personal y acceso a administración del sitio.
+* **Gestión Productos**: Monitoreo de productos y stock mediante DataTables.
+* **Gestión Ordenes de Compra**: Monitoreo de órdenes de compra emitidas mediante DataTables.
+* **Gestión Usuarios**: Monitoreo de usuarios registrados mediante DataTables.
 
 ---
 
