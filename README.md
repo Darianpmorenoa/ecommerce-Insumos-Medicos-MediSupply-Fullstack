@@ -4,7 +4,7 @@ Este repositorio contiene la arquitectura inicial, el modelo de datos relacional
 
 # Integrantes:
 * FELIPE SALAZAR
-* ANDRES MEDINA
+* ANDRES QUINTERO
 * DARIAN MORENO
 
 ---
