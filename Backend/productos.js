@@ -6,12 +6,12 @@ const getProducts = {
     response: [
       {
         id_producto: 1,
-        nombre: "Termómetro Digital",
+        nombre_producto: "Termómetro Digital",
         descripcion: "Medición infrarroja grado médico",
         precio: 5000,
         stock: 20,
-        marca: "Littmann",
-        modelo: "Classic III",
+        marca: "HealthCorp",       
+        categoria: "Salud",       
         imagen_url: "https://link.com/foto.jpg"
       }
     ]
@@ -22,12 +22,12 @@ const getProducts = {
    */
   const addProduct = {
     request_body: {
-      nombre: "Oxímetro",
+      nombre_producto: "Oxímetro",
       descripcion: "Medidor de oxígeno en sangre",
       precio: 15000,
       stock: 10,
-      marca: "ChoiceMMed",
-      modelo: "M123"
+      marca: "ChoiceMMed",  
+      categoria: "Salud"
     }
   };
   
