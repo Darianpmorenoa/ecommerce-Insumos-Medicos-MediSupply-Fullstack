@@ -2,6 +2,11 @@
 
 Este repositorio contiene la arquitectura inicial, el modelo de datos relacional y los contratos de API REST para una plataforma de venta de insumos médicos. El proyecto está diseñado bajo una estructura de separación de responsabilidades entre Cliente y Servidor.
 
+# Integrantes:
+* FELIPE SALAZAR
+* ANDRES MEDINA
+* DARIAN MORENO
+
 ---
 
 ## 📦 Dependencias y Herramientas
