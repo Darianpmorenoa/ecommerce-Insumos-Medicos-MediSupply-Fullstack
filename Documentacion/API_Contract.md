@@ -32,7 +32,7 @@ Response:
 
 ---
 
-### GET /usuarios/{id}
+### GET /usuarios/{id_usuarios}
 
 ---
 
@@ -50,6 +50,8 @@ Response:
 }
 ```
 
+
+
 ---
 
 ### PUT /usuarios/{id}
@@ -62,17 +64,43 @@ Response:
 
 ---
 
-### DELETE /usuarios/{id}
+### DELETE /usuarios/{id_usuarios}
 
 ---
 
 ## 3. PRODUCTOS
 
 ### GET /productos
+```json
+{
+  "cantidad_producto":65,
+  "prev_page": null,
+  "next_page":"/?page=2",
+  "result":[{
+  "id_producto": 1,
+  "nombre_producto": "Termómetro digital",
+  "descripcion": "Medidor de oxígeno",
+  "imagen": "img.jpg",
+  "precio": 5000,
+  "categoria": "Salud",
+  "marca": "HealthCorp"
+}]
+}
+```
 
----
+### GET /productos/{id_productos}
 
-### GET /productos/{id}
+```json
+{
+  "id_producto": 1,
+  "nombre_producto": "Termómetro digital",
+  "descripcion": "Medidor de oxígeno",
+  "imagen": "img.jpg",
+  "precio": 5000,
+  "categoria": "Salud",
+  "marca": "HealthCorp"
+}
+```
 
 ---
 
@@ -91,7 +119,7 @@ Response:
 
 ---
 
-### PUT /productos/{id}
+### PUT /productos/{id_productos}
 
 ```json
 {
@@ -101,7 +129,7 @@ Response:
 
 ---
 
-### DELETE /productos/{id}
+### DELETE /productos/{id_productos}
 
 ---
 
