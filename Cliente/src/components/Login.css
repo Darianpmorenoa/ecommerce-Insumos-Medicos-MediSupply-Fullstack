@@ -1,4 +1,4 @@
-.login-page {
+.login{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +28,7 @@
   margin-bottom: 30px;
 }
 
-.input-group {
+.input {
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -36,12 +36,12 @@
   width: 100%;
 }
 
-.input-group label {
+.input label {
   margin-bottom: 8px;
   font-weight: 500;
 }
 
-.input-group input {
+.input input {
   width: 100%;
   box-sizing: border-box; 
   padding: 12px;
@@ -50,25 +50,32 @@
   background-color: #f4f6f8;
 }
 
-.password-wrapper {
+.ojo {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.eye-icon {
+.ojo input {
+  width: 100%;
+  padding-right: 40px; /* espacio para el icono */
+}
+
+
+.ojo-icono {
   position: absolute;
   right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   cursor: pointer;
-  color: #888;
+  font-size: 18px;
+  color: #666;
 }
 
-.forgot-password {
+.olvide-password {
   text-align: right;
   margin-bottom: 25px;
 }
 
-.forgot-password a {
+.olvide-password a {
   font-size: 0.85rem;
   color: #003366;
   text-decoration: none;

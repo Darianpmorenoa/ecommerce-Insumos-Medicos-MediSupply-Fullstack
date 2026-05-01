@@ -1,9 +1,21 @@
 import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../view/Auth'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Header.css'
 
 function Header() {
+  const { isLogged, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+
+  
   return (
     <Navbar expand="lg" className="header py-3">
       <Container>
@@ -29,7 +41,24 @@ function Header() {
 
           <div className="d-flex align-items-center gap-3 mt-2 mt-lg-0">
             <Nav.Link as={Link} to="/carrito" className="header-cart">🛒</Nav.Link>
-            <Button as={Link} to="/login" className="header-btn-login">Login</Button>
+
+            {isLogged ? (
+              <Button onClick={handleLogout} className="header-btn-login">
+                Cerrar Sesión
+              </Button>
+            ) : (
+
+                    <>
+                  <Button as={Link} to="/login" className="header-btn-login">
+                   Login
+                  </Button>
+
+                    <Button as={Link} to="/register" className="header-btn-login">
+                      Registro
+                  </Button>
+                 </>
+              
+            )}
           </div>
         </Navbar.Collapse>
       </Container>

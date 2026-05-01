@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
-import {useNavigate, Link } from 'react-router-dom'; // Importante para la navegación
+import React, { useState, useContext } from 'react';
+import {useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../view/Auth';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import './Login.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Login:', { email, password });
 
+    login("token_fake");
     navigate('/');
 
   };
 
   return (
-    <div className="login-page">
+    <div className="login">
       <div className="login-card">
         <h1>Bienvenido</h1>
         <p className="subtitle">inicia sesión para continuar</p>
         
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="input">
             <label>Email Address</label>
             <input 
               type="email" 
@@ -33,19 +38,29 @@ export default function Login() {
             />
           </div>
 
-          <div className="input-group">
+          <div className="input">
             <label>Password</label>
+            <div className="ojo">
             <input 
-              type="password" 
+              type={showPassword ? "text" : "password"} 
               placeholder="Password"
               className="full-width-input" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required 
             />
+
+            <span 
+                className="ojo-icono"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+              
+          </div>
           </div>
 
-          <div className="forgot-password">
+          <div className="olvide-password">
             <Link to="/ResetPassword">Olvidé mi contraseña</Link>
           </div>
 
