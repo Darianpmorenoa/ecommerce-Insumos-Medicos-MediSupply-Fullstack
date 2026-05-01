@@ -1,23 +1,43 @@
-import { Button } from 'react-bootstrap'
-import './ProductCard.css'
+import { useContext } from "react";
+import { Button } from 'react-bootstrap';
+import { CartContext } from "../context/CartContext";
+import './ProductCard.css';
 
-function ProductCard({ nombre_producto, marca, imagen, precio }) {
+
+const ProductCard = ({ nombre_producto, marca, imagen, precio, id_producto, descripcion }) => {
+  const { addToCart } = useContext(CartContext);
+
+ 
+  const productData = { nombre_producto, marca, imagen, precio, id_producto, descripcion };
+
   return (
-    <div className="product-card">
+    <div className="product-card h-100 shadow-sm card">
       <div className="product-card-img">
-        {imagen
-          ? <img src={imagen} alt={nombre_producto} />
-          : <span>🩺</span>
-        }
+        {imagen ? (
+          <img src={imagen} alt={nombre_producto} className="card-img-top" />
+        ) : (
+          <span className="d-block text-center p-4 fs-1">🩺</span>
+        )}
       </div>
-      <div className="product-card-body">
-        <h6 className="product-card-name">{nombre_producto}</h6>
-        <small className="product-card-brand">{marca}</small>
-        <p className="product-card-price">${precio.toLocaleString('es-CL')}</p>
-        <Button className="product-card-btn">Agregar al carrito</Button>
+      
+      <div className="product-card-body card-body d-flex flex-column">
+        <h6 className="product-card-name card-title text-dark fw-bold">{nombre_producto}</h6>
+        <small className="product-card-brand text-muted mb-2">{marca}</small>
+        
+        <div className="mt-auto">
+          <p className="product-card-price fw-bold text-primary fs-5">
+            ${precio?.toLocaleString('es-CL')}
+          </p>
+          <Button 
+            className="product-card-btn btn-dark w-100 fw-bold"
+            onClick={() => addToCart(productData)}
+          >
+            Añadir al carrito 🛒
+          </Button>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

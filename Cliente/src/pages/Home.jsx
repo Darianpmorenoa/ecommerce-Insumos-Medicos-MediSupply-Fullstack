@@ -3,7 +3,8 @@ import Hero from '../components/Hero'
 import ProductCard from '../components/ProductCard'
 import { productos } from '../data/products'
 
-const productosDestacados = productos.result.slice(0, 4)
+
+const productosDestacados = productos.result.slice(0, 4);
 
 function Home() {
   return (
@@ -17,10 +18,13 @@ function Home() {
             {productosDestacados.map((p) => (
               <Col key={p.id_producto}>
                 <ProductCard
+                  key={p.id_producto}
+                  id_producto={p.id_producto}
                   nombre_producto={p.nombre_producto}
                   marca={p.marca}
                   imagen={p.imagen}
                   precio={p.precio}
+                  descripcion={p.descripcion}
                 />
               </Col>
             ))}

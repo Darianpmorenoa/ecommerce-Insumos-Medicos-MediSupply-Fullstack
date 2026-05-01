@@ -1,9 +1,16 @@
-import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap'
+import { useContext } from "react"; 
+import { Navbar, Nav, NavDropdown, Container, Button, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { CartContext } from "../context/CartContext"; 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Header.css'
 
 function Header() {
+  
+  const { cart } = useContext(CartContext);
+
+  const totalItems = cart.reduce((acc, item) => acc + item.count, 0);
+
   return (
     <Navbar expand="lg" className="header py-3">
       <Container>
@@ -18,7 +25,7 @@ function Header() {
             <Nav.Link as={Link} to="/" className="header-link">Home</Nav.Link>
 
             <NavDropdown title="Categorías" id="dropdown-categorias" className="header-link">
-              {['Categoría 1', 'Categoría 2', 'Categoría 3', 'Categoría 4'].map(cat => (
+              {['Salud', 'Terapia', 'Diagnóstico'].map(cat => (
                 <NavDropdown.Item key={cat} href="#">{cat}</NavDropdown.Item>
               ))}
             </NavDropdown>
@@ -28,7 +35,20 @@ function Header() {
           </Nav>
 
           <div className="d-flex align-items-center gap-3 mt-2 mt-lg-0">
-            <Nav.Link as={Link} to="/carrito" className="header-cart">🛒</Nav.Link>
+            <Nav.Link as={Link} to="/carrito" className="header-cart position-relative">
+              🛒
+              {totalItems > 0 && (
+                <Badge 
+                  pill 
+                  bg="info" 
+                  className="position-absolute top-0 start-100 translate-middle"
+                  style={{ fontSize: '0.65rem' }}
+                >
+                  {totalItems}
+                </Badge>
+              )}
+            </Nav.Link>
+            
             <Button as={Link} to="/login" className="header-btn-login">Login</Button>
           </div>
         </Navbar.Collapse>
