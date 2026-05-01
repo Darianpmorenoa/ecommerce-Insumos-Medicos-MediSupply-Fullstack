@@ -46,7 +46,7 @@ function Header() {
 
           <div className="d-flex align-items-center gap-3 mt-2 mt-lg-0">
 
-            {/* 🛒 Carrito con contador */}
+          
             <Nav.Link as={Link} to="/carrito" className="header-cart position-relative">
               🛒
               {totalItems > 0 && (
@@ -61,7 +61,7 @@ function Header() {
               )}
             </Nav.Link>
 
-            {/* 🔐 Login / Logout */}
+            
             {isLogged ? (
               <Button onClick={handleLogout} className="header-btn-login">
                 Cerrar sesión
