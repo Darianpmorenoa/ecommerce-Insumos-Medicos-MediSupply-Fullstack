@@ -1,21 +1,24 @@
-import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
-import { AuthContext } from '../view/Auth'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './Header.css'
+import { useContext } from "react";
+import { Navbar, Nav, NavDropdown, Container, Button, Badge } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../view/Auth";
+import { CartContext } from "../context/CartContext";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Header.css";
 
 function Header() {
   const { isLogged, logout } = useContext(AuthContext);
+  const { cart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
+  const totalItems = cart.reduce((acc, item) => acc + item.count, 0);
 
-  
   return (
     <Navbar expand="lg" className="header py-3">
       <Container>
@@ -30,8 +33,10 @@ function Header() {
             <Nav.Link as={Link} to="/" className="header-link">Home</Nav.Link>
 
             <NavDropdown title="Categorías" id="dropdown-categorias" className="header-link">
-              {['Categoría 1', 'Categoría 2', 'Categoría 3', 'Categoría 4'].map(cat => (
-                <NavDropdown.Item key={cat} href="#">{cat}</NavDropdown.Item>
+              {["Salud", "Terapia", "Diagnóstico"].map(cat => (
+                <NavDropdown.Item key={cat} href="#">
+                  {cat}
+                </NavDropdown.Item>
               ))}
             </NavDropdown>
 
@@ -40,30 +45,42 @@ function Header() {
           </Nav>
 
           <div className="d-flex align-items-center gap-3 mt-2 mt-lg-0">
-            <Nav.Link as={Link} to="/carrito" className="header-cart">🛒</Nav.Link>
 
+            {/* 🛒 Carrito con contador */}
+            <Nav.Link as={Link} to="/carrito" className="header-cart position-relative">
+              🛒
+              {totalItems > 0 && (
+                <Badge
+                  pill
+                  bg="info"
+                  className="position-absolute top-0 start-100 translate-middle"
+                  style={{ fontSize: "0.65rem" }}
+                >
+                  {totalItems}
+                </Badge>
+              )}
+            </Nav.Link>
+
+            {/* 🔐 Login / Logout */}
             {isLogged ? (
               <Button onClick={handleLogout} className="header-btn-login">
-                Cerrar Sesión
+                Cerrar sesión
               </Button>
             ) : (
-
-                    <>
-                  <Button as={Link} to="/login" className="header-btn-login">
-                   Login
-                  </Button>
-
-                    <Button as={Link} to="/register" className="header-btn-login">
-                      Registro
-                  </Button>
-                 </>
-              
+              <>
+                <Button as={Link} to="/login" className="header-btn-login">
+                  Login
+                </Button>
+                <Button as={Link} to="/register" className="header-btn-login">
+                  Registro
+                </Button>
+              </>
             )}
           </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
+  );
 }
 
-export default Header
+export default Header;
