@@ -6,6 +6,7 @@ React-router-dom
 fontawesome
 DataTables
 Sweet Alerts 2
+react-icons
 
 
 BACK-END:
