@@ -1,0 +1,37 @@
+.footer {
+  background-color: var(--color-dark);
+  color: white;
+  margin-top: 4rem;
+  padding: 2.5rem 0;
+}
+
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.footer-brand span { color: var(--color-highlight); }
+
+.footer-subtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+.footer-social-link {
+  color: var(--color-accent);
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.footer-social-link:hover { color: var(--color-highlight); }
+
+.footer-divider { border-color: rgba(255, 255, 255, 0.1); }
+
+.footer-copy {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.8rem;
+  margin: 0;
+}

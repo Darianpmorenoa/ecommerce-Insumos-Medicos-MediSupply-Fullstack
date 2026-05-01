@@ -1,26 +1,18 @@
-import './App.css'
-import {productos} from './data/products'
-import ProductsCards from './components/productsCards'
+import { Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Home from './pages/Home'
 
 function App() {
-  
-  console.log(productos)
   return (
     <>
-{
-  productos.result.map((producto) => (
-    <ProductsCards
-      key={producto.id_producto}
-      id_producto={producto.id_producto}
-      nombre_producto={producto.nombre_producto}
-      descripcion={producto.descripcion}
-      imagen={producto.imagen}
-      precio={producto.precio}
-    />
-  ))}
-  
-
-      </>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+      <Footer />
+    </>
   )
 }
+
 export default App

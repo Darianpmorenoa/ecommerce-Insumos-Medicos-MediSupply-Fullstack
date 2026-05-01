@@ -1,15 +1,43 @@
 export const productos = {
-    "cantidad_producto": 65,
-    "prev_page": null,
-    "next_page": "/?page=2",
-    "result": [{
-        "id_producto": 1,
-        "nombre_producto": "Termómetro digital",
-        "descripcion": "Medidor de oxígeno",
-        "imagen": "img.jpg",
-        "precio": 5000,
-        "categoria": "Salud",
-        "marca": "HealthCorp"
-    }]
-
-}
+  cantidad_producto: 65,
+  prev_page: null,
+  next_page: "/?page=2",
+  result: [
+    {
+      id_producto: 1,
+      nombre_producto: "Termómetro digital",
+      descripcion: "Medidor de oxígeno",
+      imagen: "img.jpg",
+      precio: 5000,
+      categoria: "Salud",
+      marca: "HealthCorp",
+    },
+    {
+      id_producto: 2,
+      nombre_producto: "Oxímetro de pulso",
+      marca: "MedPro",
+      descripcion: "...",
+      imagen: "",
+      precio: 15000,
+      categoria: "Salud",
+    },
+    {
+      id_producto: 3,
+      nombre_producto: "Tensiómetro digital",
+      marca: "HealthCorp",
+      descripcion: "...",
+      imagen: "",
+      precio: 28000,
+      categoria: "Salud",
+    },
+    {
+      id_producto: 4,
+      nombre_producto: "Nebulizador portátil",
+      marca: "AirMed",
+      descripcion: "...",
+      imagen: "",
+      precio: 42000,
+      categoria: "Terapia",
+    },
+  ],
+};

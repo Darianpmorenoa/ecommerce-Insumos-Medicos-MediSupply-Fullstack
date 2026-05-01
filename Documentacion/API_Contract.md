@@ -7,7 +7,6 @@
 ### POST /login
 
 Request:
-
 ```json
 {
   "email": "juan@gmail.com",
@@ -16,11 +15,16 @@ Request:
 ```
 
 Response:
-
 ```json
 {
   "mensaje": "Login exitoso",
-  "id_usuario": 1
+  "token": "eyJhbGciOiJI...",
+  "usuario": {
+    "id_usuario": 1,
+    "nombre": "Juan",
+    "email": "juan@gmail.com",
+    "rol": "cliente"
+  }
 }
 ```
 
@@ -29,17 +33,30 @@ Response:
 ## 2. USUARIOS
 
 ### GET /usuarios
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ---
 
 ### GET /usuarios/{id_usuarios}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ---
 
 ### POST /usuarios
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ```json
 {
+  "rut": "12345678-9",
   "nombre": "Juan",
   "apellido": "Pérez",
   "email": "juan@gmail.com",
@@ -55,6 +72,10 @@ Response:
 ---
 
 ### PUT /usuarios/{id}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ```json
 {
@@ -65,6 +86,10 @@ Response:
 ---
 
 ### DELETE /usuarios/{id_usuarios}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ---
 
@@ -105,6 +130,10 @@ Response:
 ---
 
 ### POST /productos
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ```json
 {
@@ -112,6 +141,7 @@ Response:
   "descripcion": "Medidor de oxígeno",
   "imagen": "img.jpg",
   "precio": 5000,
+  "stock": 100,
   "categoria": "Salud",
   "marca": "HealthCorp"
 }
@@ -120,8 +150,9 @@ Response:
 ---
 
 ### PUT /productos/{id_productos}
-
 ```json
+Headers:
+  Authorization: Bearer <token>
 {
   "precio": 12000
 }
@@ -130,6 +161,10 @@ Response:
 ---
 
 ### DELETE /productos/{id_productos}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ---
 
@@ -146,7 +181,23 @@ Response:
 ---
 
 ### GET /carrito/{id_carrito}
-
+```json
+Response:
+{
+  "id_carrito": 1,
+  "id_usuario": 1,
+  "items": [
+    {
+      "id_producto": 2,
+      "nombre_producto": "Termómetro digital",
+      "cantidad": 3,
+      "precio_unitario": 5000,
+      "subtotal": 15000
+    }
+  ],
+  "total": 15000
+}
+```
 ---
 
 ### POST /carrito/agregar
@@ -161,19 +212,15 @@ Response:
 
 ---
 
-### PUT /carrito/actualizar
-
+### PUT /api/carrito/{id_carrito}/items/{id_producto}
+body:
 ```json
-{
-  "id_carrito": 1,
-  "id_producto": 2,
-  "cantidad": 5
-}
+{ "cantidad": 5 }
 ```
 
 ---
 
-### DELETE /carrito/eliminar
+### DELETE /api/carrito/{id_carrito}/items/{id_producto}
 
 ```json
 {
@@ -209,10 +256,18 @@ Response:
 ## 6. BOLETA
 
 ### GET /boletas
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ---
 
-### GET /boleta/{cod_boleta}
+### GET /boletas/{cod_boleta}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ```json
 {
@@ -232,11 +287,19 @@ Response:
 
 ---
 
-### GET /mis-boletas/{id_usuario}
+### GET /boletas/{id_usuario}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ---
 
-### PUT /boleta/{cod_boleta}
+### PUT /boletas/{cod_boleta}
+Headers:
+```json
+  Authorization: Bearer <token>
+```
 
 ```json
 {
@@ -245,6 +308,3 @@ Response:
 ```
 
 ---
-
-
-
