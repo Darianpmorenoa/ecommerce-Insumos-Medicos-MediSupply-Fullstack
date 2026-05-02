@@ -1,13 +1,12 @@
 import { useContext } from "react";
 import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import './ProductCard.css';
-
 
 const ProductCard = ({ nombre_producto, marca, imagen, precio, id_producto, descripcion }) => {
   const { addToCart } = useContext(CartContext);
 
- 
   const productData = { nombre_producto, marca, imagen, precio, id_producto, descripcion };
 
   return (
@@ -28,12 +27,24 @@ const ProductCard = ({ nombre_producto, marca, imagen, precio, id_producto, desc
           <p className="product-card-price fw-bold text-primary fs-5">
             ${precio?.toLocaleString('es-CL')}
           </p>
-          <Button 
-            className="product-card-btn btn-dark w-100 fw-bold"
-            onClick={() => addToCart(productData)}
-          >
-            Añadir al carrito 🛒
-          </Button>
+
+          <div className="d-grid gap-2">
+            <Link to={`/producto/${id_producto}`}>
+              <Button 
+                variant="outline-primary" 
+                className="w-100 fw-bold"
+              >
+                Ver detalles 👀
+              </Button>
+            </Link>
+
+            <Button 
+              className="product-card-btn btn-dark w-100 fw-bold"
+              onClick={() => addToCart(productData)}
+            >
+              Añadir al carrito 🛒
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -50,3 +50,7 @@
   color: var(--color-dark);
   opacity: 0.85;
 }
+
+html {
+  scroll-behavior: smooth;
+}

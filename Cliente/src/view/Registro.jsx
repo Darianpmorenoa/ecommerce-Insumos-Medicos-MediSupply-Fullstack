@@ -17,7 +17,7 @@ const Register = () => {
     e.preventDefault();
     setError("");
 
-    if (!formData.nombre || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.nombre.trim() || !formData.email.trim() || !formData.password || !formData.confirmPassword) {
       setError("Todos los campos son obligatorios.");
       return;
     }
@@ -37,6 +37,11 @@ const Register = () => {
     navigate("/login"); 
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
     <Container className="py-5 d-flex justify-content-center">
       <Card style={{ maxWidth: "450px", width: "100%" }} className="shadow-lg border-0 rounded-4">
@@ -53,8 +58,10 @@ const Register = () => {
               <Form.Label className="small fw-bold">Nombre Completo</Form.Label>
               <Form.Control
                 type="text"
+                name="nombre"
+                value={formData.nombre}
                 placeholder="Juan Pérez"
-                onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                onChange={handleChange}
               />
             </Form.Group>
 
@@ -62,8 +69,10 @@ const Register = () => {
               <Form.Label className="small fw-bold">Email</Form.Label>
               <Form.Control
                 type="email"
+                name="email"
+                value={formData.email}
                 placeholder="usuario@ejemplo.com"
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={handleChange}
               />
             </Form.Group>
 
@@ -71,8 +80,10 @@ const Register = () => {
               <Form.Label className="small fw-bold">Contraseña</Form.Label>
               <Form.Control
                 type="password"
+                name="password"
+                value={formData.password}
                 placeholder="******"
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={handleChange}
               />
             </Form.Group>
 
@@ -80,8 +91,10 @@ const Register = () => {
               <Form.Label className="small fw-bold">Confirmar Contraseña</Form.Label>
               <Form.Control
                 type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
                 placeholder="******"
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                onChange={handleChange}
               />
             </Form.Group>
 

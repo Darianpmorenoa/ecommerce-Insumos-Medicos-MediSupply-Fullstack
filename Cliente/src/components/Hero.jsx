@@ -11,7 +11,9 @@ function Hero() {
           <p className="hero-subtitle">
             Encuentra todo lo que necesitas con la mejor atención y los mejores precios.
           </p>
-          <Button className="hero-btn">Ver Productos</Button>
+          <Button href="#productos-galeria" variant="info" className="fw-bold px-4 py-2"style={{ backgroundColor: '#4df8ce', border: 'none' }}>
+          Ver Productos
+          </Button>
         </div>
       </Container>
     </section>
