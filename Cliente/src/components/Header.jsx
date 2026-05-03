@@ -1,6 +1,13 @@
 import { useContext } from "react";
-import { Navbar, Nav, NavDropdown, Container, Button, Badge } from "react-bootstrap";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Container,
+  Button,
+  Badge,
+} from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../view/Auth";
 import { CartContext } from "../context/CartContext";
 
@@ -20,31 +27,53 @@ function Header() {
           Medi<span>Supply</span>
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="nav-principal" className="header-toggle" />
+        <Navbar.Toggle
+          aria-controls="nav-principal"
+          className="header-toggle"
+        />
 
         <Navbar.Collapse id="nav-principal">
           <Nav className="me-auto gap-1 mt-2 mt-lg-0">
-            <Nav.Link as={NavLink} to="/" className="header-link">Home</Nav.Link>
-
-            <NavDropdown title="Categorías" id="dropdown-categorias" className="header-link">
-              {["Salud", "Terapia", "Diagnóstico"].map(cat => (
-                <NavDropdown.Item 
-                  key={cat} 
-                  as={Link} 
-                  to={`/categoria/${cat.toLowerCase()}`}
-                >
-                  {cat}
-                </NavDropdown.Item>
-              ))}
+            <Nav.Link as={NavLink} to="/" className="header-link">
+              Home
+            </Nav.Link>
+            <NavDropdown
+              title="Categorías"
+              id="dropdown-categorias"
+              className="header-link"
+            >
+              <NavDropdown.Item as={Link} to="/productos">
+                Todos los productos
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              {["Salud", "Terapia", "Higiene", "Diagnóstico", "Quirófano"].map(
+                (cat) => (
+                  <NavDropdown.Item
+                    key={cat}
+                    as={Link}
+                    to={`/productos?categoria=${cat}`}
+                  >
+                    {cat}
+                  </NavDropdown.Item>
+                ),
+              )}
             </NavDropdown>
 
-            <Nav.Link as={NavLink} to="/nosotros" className="header-link">Nosotros</Nav.Link>
-            <Nav.Link as={NavLink} to="/contacto" className="header-link">Contacto</Nav.Link>
+            <Nav.Link as={NavLink} to="/nosotros" className="header-link">
+              Nosotros
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/contacto" className="header-link">
+              Contacto
+            </Nav.Link>
           </Nav>
 
           <div className="d-flex align-items-center gap-3 mt-2 mt-lg-0">
-            <Nav.Link as={Link} to="/carrito" className="header-cart position-relative p-0">
-              <span style={{fontSize: "1.5rem"}}>🛒</span>
+            <Nav.Link
+              as={Link}
+              to="/carrito"
+              className="header-cart position-relative p-0"
+            >
+              <span style={{ fontSize: "1.5rem" }}>🛒</span>
               {totalItems > 0 && (
                 <Badge
                   pill
@@ -59,7 +88,7 @@ function Header() {
 
             {isLogged ? (
               <Button as={Link} to="/profile" className="header-btn-login">
-                 👤 Mi Perfil
+                👤 Mi Perfil
               </Button>
             ) : (
               <div className="d-flex gap-2">
