@@ -14,6 +14,8 @@ import Products from './view/Products';
 import Cart from './view/Cart'; 
 import ProductDetail from "./view/ProductDetail";
 import ResetPassword from './components/ResetPassword';
+import Checkout from './components/Checkout';
+import ThankYou from './components/ThankYou';
 import NotFound from './view/NotFound'; 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
 
         <Route path="/producto/:id" element={<ProductDetail />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/thankyou" element={<ThankYou  />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

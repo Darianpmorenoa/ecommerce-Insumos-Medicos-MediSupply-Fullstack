@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Button, ListGroup, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Cart = () => {
   const { cart, addToCart, removeFromCart, totalCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   return (
     <Container className="py-5" style={{ minHeight: "80vh" }}>
@@ -61,7 +63,7 @@ const Cart = () => {
                 <span>Total:</span>
                 <span className="fw-bold text-primary">${totalCart.toLocaleString('es-CL')}</span>
               </div>
-              <Button variant="success" className="w-100 fw-bold py-2 shadow-sm">
+              <Button onClick={() => navigate('/checkout')} variant="success" className="w-100 fw-bold py-2 shadow-sm">
                 Ir a pagar 💳
               </Button>
               <Link to="/" className="d-block text-center mt-3 text-decoration-none text-muted">
