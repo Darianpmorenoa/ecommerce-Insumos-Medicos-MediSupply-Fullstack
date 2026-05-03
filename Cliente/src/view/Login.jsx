@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import {useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from '../view/Auth';
+import { AuthContext } from './Auth';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import './Login.css';
 
@@ -16,7 +16,7 @@ export default function Login() {
     console.log('Login:', { email, password });
 
     login("token_fake");
-    navigate('/productos');
+    navigate('/profile');
 
   };
 

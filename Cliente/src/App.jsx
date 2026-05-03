@@ -7,15 +7,15 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import Home from './view/Home';
-import Login from './components/Login'; 
-import Register from './components/Register';
-import Profile from './components/Profile';
+import Login from './view/Login'; 
+import Register from './view/Register';
+import Profile from './view/Profile';
 import Products from './view/Products';
 import Cart from './view/Cart'; 
 import ProductDetail from "./view/ProductDetail";
-import ResetPassword from './components/ResetPassword';
-import Checkout from './components/Checkout';
-import ThankYou from './components/ThankYou';
+import ResetPassword from './view/ResetPassword';
+import Checkout from './view/Checkout';
+import ThankYou from './view/ThankYou';
 import NotFound from './view/NotFound'; 
 
 function App() {

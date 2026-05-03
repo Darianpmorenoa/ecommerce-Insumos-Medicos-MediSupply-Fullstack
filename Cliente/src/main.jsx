@@ -7,7 +7,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { AuthProvider } from './view/Auth';
-import { CartProvider } from './context/CartContext.jsx';
+import { CartProvider } from './context/CartProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
