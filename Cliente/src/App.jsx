@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from './view/Auth';
 import { Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Contact from './components/Contact';
+
 import Footer from './components/Footer';
 
 import Home from './view/Home';
@@ -17,6 +17,8 @@ import ResetPassword from './view/ResetPassword';
 import Checkout from './view/Checkout';
 import ThankYou from './view/ThankYou';
 import NotFound from './view/NotFound';
+import Contact from './view/Contact';
+import About from './view/About';
 
 import AdminLogin from './view/admin/AdminLogin';
 import AdminHome from './view/admin/AdminHome';
@@ -46,6 +48,8 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/contacto" element={<Contact />} />
+        <Route path="/nosotros" element={<About />} />
+    
 
         {/* Rutas admin */}
         <Route path="/admin" element={<AdminLogin />} />

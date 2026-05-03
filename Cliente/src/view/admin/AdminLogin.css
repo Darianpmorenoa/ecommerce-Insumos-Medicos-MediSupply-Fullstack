@@ -1,7 +1,6 @@
 .admin-login {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-primary) 100%);
-  /* reemplaza por: background: url('/imagen-admin.jpg') center/cover no-repeat; */
   display: flex;
   align-items: center;
   justify-content: space-between;
