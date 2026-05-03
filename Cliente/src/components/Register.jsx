@@ -69,7 +69,9 @@ export default function Register() {
                 onChange={handleChange} 
                 required 
               />
-              <span className="ojo-icono" onClick={() => setShowPass(!showPass)}>
+              
+              <span className="ojo-icono" 
+              onClick={() => setShowPass(!showPass)}>
                 {showPass ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -85,7 +87,8 @@ export default function Register() {
                 onChange={handleChange} 
                 required 
               />
-              <span className="ojo-icono" onClick={() => setShowConfirmPass(!showConfirmPass)}>
+              <span className="ojo-icono" 
+              onClick={() => setShowConfirmPass(!showConfirmPass)}>
                 {showConfirmPass ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>

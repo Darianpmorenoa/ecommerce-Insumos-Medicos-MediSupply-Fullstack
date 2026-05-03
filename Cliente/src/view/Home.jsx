@@ -2,6 +2,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import Hero from '../components/Hero'
 import ProductCard from '../components/ProductCard'
 import { productos } from '../data/products'
+import { Link } from "react-router-dom";
 
 const productosDestacados = productos.result.slice(0, 4);
 
@@ -26,6 +27,15 @@ function Home() {
               </Col>
             ))}
           </Row>
+
+          <div className="text-center mt-4">
+            <Link to="/productos">
+              <button className="btn btn-primary px-4 py-2">
+                Ver catálogo completo →
+              </button>
+            </Link>
+          </div>
+
         </Container>
       </section>
     </main>

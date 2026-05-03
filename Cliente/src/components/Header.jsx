@@ -8,14 +8,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Header.css";
 
 function Header() {
-  const { isLogged, logout } = useContext(AuthContext);
+  const { isLogged } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
   const totalItems = cart.reduce((acc, item) => acc + item.count, 0);
 
@@ -64,8 +58,8 @@ function Header() {
             </Nav.Link>
 
             {isLogged ? (
-              <Button onClick={handleLogout} className="header-btn-login">
-                Cerrar sesión
+              <Button as={Link} to="/profile" className="header-btn-login">
+                 👤 Mi Perfil
               </Button>
             ) : (
               <div className="d-flex gap-2">

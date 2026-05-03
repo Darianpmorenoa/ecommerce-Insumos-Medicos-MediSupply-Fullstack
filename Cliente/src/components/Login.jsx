@@ -16,7 +16,7 @@ export default function Login() {
     console.log('Login:', { email, password });
 
     login("token_fake");
-    navigate('/');
+    navigate('/productos');
 
   };
 
@@ -61,14 +61,14 @@ export default function Login() {
           </div>
 
           <div className="olvide-password">
-            <Link to="/ResetPassword">Olvidé mi contraseña</Link>
+            <Link to="/reset-password">Olvidé mi contraseña</Link>
           </div>
 
           <button type="submit" className="login-btn">Iniciar sesión</button>
         </form>
 
         <p className="register-text">
-          ¿No tienes una cuenta? <Link to="/register">Regístrate acá</Link>
+          ¿No tienes una cuenta? <Link to="/Registro">Regístrate acá</Link>
         </p>
       </div>
     </div>
