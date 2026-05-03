@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from './view/Auth';
 import { Navigate } from 'react-router-dom';
 import Header from './components/Header';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 import Home from './view/Home';
@@ -44,6 +45,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/thankyou" element={<ThankYou />} />
+        <Route path="/contacto" element={<Contact />} />
 
         {/* Rutas admin */}
         <Route path="/admin" element={<AdminLogin />} />
