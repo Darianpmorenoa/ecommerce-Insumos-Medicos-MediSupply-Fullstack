@@ -3,9 +3,16 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+
 // Middlewares globales
 app.use(cors()); 
 app.use(express.json());
+
+//prueba de una ruta
+app.get("/", (req, res) => {
+  res.send("Servidor de MediSupply funcionando correctamente 🚀");
+});
+
 
 // Rutas aquí:
 
@@ -16,9 +23,6 @@ app.listen(PORT, () => {
 });
 
 
-app.get("/", (req, res) => {
-  res.send("Servidor de MediSupply funcionando correctamente 🚀");
-});
 
 
 
