@@ -15,4 +15,12 @@ app.listen(PORT, () => {
     console.log(`SERVER ON PORT ${PORT}`);
 });
 
+
+app.get("/", (req, res) => {
+  res.send("Servidor de MediSupply funcionando correctamente 🚀");
+});
+
+
+
+
 module.exports = app;
