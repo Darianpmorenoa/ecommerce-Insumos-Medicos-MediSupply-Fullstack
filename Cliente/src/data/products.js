@@ -7,7 +7,7 @@ export const productos = {
     {
       id_producto: 1,
       nombre_producto: "Termómetro digital",
-      descripcion: "Medidor de oxígeno",
+      descripcion: "Medidor de temperatura",
       imagen: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQpYluP2OOE3SDMr87SqLo8gANKaKawJAj-WuoB1poVhmto94USGRMIag76RXXK-MA4SPXgNv8L0_mNiygLrbkpaVOiOGmpnzznwIpFADax8yXWwabbUWnL4xawffT7ux12QX1DEUE&usqp=CAc",
       precio: 7000,
       categoria: "Salud",
