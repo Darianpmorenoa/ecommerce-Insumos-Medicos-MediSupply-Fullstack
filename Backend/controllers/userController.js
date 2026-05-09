@@ -21,16 +21,49 @@ const registrarUsuario = async (req, res) => {
 const loginUsuario = async (req, res) => {
     try {
         const { email, password } = req.body;
-        
-        // Aquí se implementará la validación de credenciales y generación de JWT
-        res.status(200).json({ 
-            message: "Login exitoso (Simulado)",
-            token: "token-de-prueba-aqui" 
+
+        // 1. Buscar usuario en la BD
+        const usuario = await consultas.obtenerUsuarioPorEmail(email);
+        if (!usuario) {
+            return res.status(401).json({ message: "Credenciales incorrectas" });
+        }
+
+        // 2. Comparar password con bcrypt
+        const passwordValida = bcrypt.compareSync(password, usuario.password);
+        if (!passwordValida) {
+            return res.status(401).json({ message: "Credenciales incorrectas" });
+        }
+
+        // 3. Generar JWT
+        const token = jwt.sign(
+            { id: usuario.id, email: usuario.email, rol: usuario.rol },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.status(200).json({
+            token,
+            usuario: {
+                id: usuario.id,
+                nombre: usuario.nombre,
+                rol: usuario.rol
+            }
         });
+
     } catch (error) {
         console.error("Error en el login:", error.message);
         res.status(500).send("Error en el servidor");
     }
 };
 
-module.exports = { registrarUsuario, loginUsuario };
+const obtenerUsuarios = async (req, res) => {
+    try {
+        const usuarios = await consultas.obtenerUsuarios();
+        res.status(200).json(usuarios);
+    } catch (error) {
+        console.error("Error al obtener usuarios:", error.message);
+        res.status(500).send("Error en el servidor");
+    }
+};
+
+module.exports = { registrarUsuario, loginUsuario, obtenerUsuarios };

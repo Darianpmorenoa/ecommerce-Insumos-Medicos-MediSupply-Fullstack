@@ -19,4 +19,10 @@ const obtenerUsuarioPorEmail = async (email) => {
     return rows[0];
 };
 
-module.exports = { registrarUsuario, obtenerUsuarioPorEmail };
+const obtenerUsuarios = async () => {
+    const consulta = "SELECT id_usuario, nombre, apellido, email, rut, telefono, rol FROM usuarios";
+    const { rows } = await pool.query(consulta);
+    return rows;
+};
+
+module.exports = { registrarUsuario, obtenerUsuarioPorEmail, obtenerUsuarios };
