@@ -1,7 +1,7 @@
 const express = require('express');
 const productsRouter = express.Router();
 const {getAllProducts, getProductById, createProduct, deleteProduct, modifyProduct} = require('../controllers/productController');
-
+const { validateToken, verifyAdmin } = require('../middlewares/auth');
 
 
 // GET GENERAL
@@ -23,7 +23,7 @@ productsRouter.get("/:id", async (req, res) => {
 
 
 // CREATE PRODUCTO
-productsRouter.post("/", async (req, res) => {
+productsRouter.post("/", validateToken, verifyAdmin, async (req, res) => {
 
     const product = await createProduct(req.body);
     res.status(201).json(
@@ -37,7 +37,7 @@ productsRouter.post("/", async (req, res) => {
 
 
 // DELETE PRODUCTO
-productsRouter.delete("/:id", async (req, res) => {
+productsRouter.delete("/:id", validateToken, verifyAdmin, async (req, res) => {
 
     const result = await deleteProduct(req.params.id);
     res.json(
@@ -51,7 +51,7 @@ productsRouter.delete("/:id", async (req, res) => {
 
 
 // UPDATE PRODUCTO
-productsRouter.put("/:id", async (req, res) => {
+productsRouter.put("/:id", validateToken, verifyAdmin, async (req, res) => {
 
     const product = await modifyProduct(
         req.params.id,
