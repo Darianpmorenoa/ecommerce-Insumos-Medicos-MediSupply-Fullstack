@@ -7,7 +7,7 @@ const registrarUsuario = async (req, res) => {
     try {
         const usuario = req.body; 
         
-        // Lógica para registrar en la base de datos (Neon)
+        // Lógica para registrar en la base de datos 
         await consultas.registrarUsuario(usuario); 
         
         res.status(201).send("Usuario registrado con éxito ✅");
