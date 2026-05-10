@@ -1,58 +1,48 @@
 const pool = require('../database/conection');
 
-
-// Obtener todos los productos
-const getAllProducts = async () => {
-
-    const query = `SELECT * FROM productos`;
-    const result = await pool.query(query);
-    return result.rows;
+// Obtener todos los productos (Para la tienda)
+const getAllProducts = async (req, res) => {
+    try {
+        const query = `SELECT * FROM productos`;
+        const result = await pool.query(query);
+        res.status(200).json(result.rows);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener productos" });
+    }
 };
 
-
-// Obtener producto por ID
-const getProductById = async (id) => {
-
-    const query = `SELECT * FROM productos WHERE id_producto = $1`;
-    const result = await pool.query(query, [id]);
-    return result.rows[0];
+// Obtener producto por ID (Para la vista de detalle)
+const getProductById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const query = `SELECT * FROM productos WHERE id = $1`; // Cambiado id_producto -> id
+        const result = await pool.query(query, [id]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Producto no encontrado" });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener el producto" });
+    }
 };
 
-
-// Crear producto
-const createProduct = async (product) => {
-
-    const values = [ product.nombre_producto, product.descripcion, product.imagen, product.precio, product.stock, product.marca ,product.id_categoria];
-    const query = `INSERT INTO productos( nombre_producto, descripcion, imagen, precio, stock, marca, id_categoria) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
-    const result = await pool.query(query, values);
-    return result.rows[0];
+// Crear producto (Para el Admin)
+const createProduct = async (req, res) => {
+    try {
+        const { nombre, descripcion, imagen_url, precio, stock, categoria } = req.body;
+        const values = [nombre, descripcion, imagen_url, precio, stock, categoria];
+        const query = `INSERT INTO productos (nombre, descripcion, imagen_url, precio, stock, categoria) 
+                       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+        const result = await pool.query(query, values);
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Error al crear producto" });
+    }
 };
-
-
-// Eliminar producto
-const deleteProduct = async (id) => {
-
-    const query = `DELETE FROM productos WHERE id_producto = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
-    return result.rows[0];
-};
-
-
-// Modificar producto
-const modifyProduct = async (id, product) => {
-
-    const values = [product.nombre_producto, product.descripcion, product.imagen, product.precio, product.stock, product.marca ,product.id_categoria, id];
-    const query = `UPDATE productos SET nombre_producto = $1, descripcion = $2, imagen = $3, precio = $4, stock = $5, marca = $6, id_categoria = $7 WHERE id_producto = $8 RETURNING *`;
-    const result = await pool.query(query, values);
-    return result.rows[0];
-};
-
 
 module.exports = {
     getAllProducts,
     getProductById,
-    createProduct,
-    deleteProduct,
-    modifyProduct
+    createProduct
 };
-

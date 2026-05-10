@@ -65,5 +65,20 @@ const obtenerUsuarios = async (req, res) => {
         res.status(500).send("Error en el servidor");
     }
 };
+const obtenerPerfil = async (req, res) => {
+    try {
+        // El email viene del token que decodificamos en el middleware auth.js
+        const { email } = req.user; 
+        const usuario = await consultas.obtenerPerfilUsuario(email);
+        
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
 
-module.exports = { registrarUsuario, loginUsuario, obtenerUsuarios };
+        res.json(usuario);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener el perfil" });
+    }
+};
+
+module.exports = { registrarUsuario, loginUsuario, obtenerUsuarios, obtenerPerfil };
