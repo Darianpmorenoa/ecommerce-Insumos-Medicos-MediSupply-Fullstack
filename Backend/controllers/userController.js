@@ -36,16 +36,18 @@ const loginUsuario = async (req, res) => {
 
         // 3. Generar JWT
         const token = jwt.sign(
-            { id: usuario.id, email: usuario.email, rol: usuario.rol },
+            { id: usuario.id_usuario, email: usuario.email, rol: usuario.rol },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
 
         res.status(200).json({
+             message: "Login exitoso",
             token,
             usuario: {
-                id: usuario.id,
+                id: usuario.id_usuario,
                 nombre: usuario.nombre,
+                email: usuario.email,
                 rol: usuario.rol
             }
         });
@@ -81,4 +83,7 @@ const obtenerPerfil = async (req, res) => {
     }
 };
 
-module.exports = { registrarUsuario, loginUsuario, obtenerUsuarios, obtenerPerfil };
+module.exports = { registrarUsuario, 
+                   loginUsuario,  
+                   obtenerUsuarios, 
+                   obtenerPerfil };

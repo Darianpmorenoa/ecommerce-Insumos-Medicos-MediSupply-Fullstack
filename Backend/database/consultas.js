@@ -36,7 +36,7 @@ const obtenerProductos = async () => {
 
 // NUEVA: Para ver el detalle de un solo producto
 const obtenerProductoPorId = async (id) => {
-    const consulta = "SELECT * FROM productos WHERE id = $1";
+    const consulta = "SELECT * FROM productos WHERE id_producto = $1";
     const { rows } = await pool.query(consulta, [id]);
     return rows[0];
 };
@@ -51,11 +51,11 @@ const generarBoleta = async (id_usuario, productos, total) => {
     for (const producto of productos) {
         // Insertar cada producto en boleta_items
         const consultaDetalle = "INSERT INTO boleta_items (id_boleta, id_producto, cantidad, precio_unitario) VALUES ($1, $2, $3, $4)";
-        await pool.query(consultaDetalle, [nuevaBoleta.id, producto.id, producto.cantidad, producto.precio]);
+        await pool.query(consultaDetalle, [nuevaBoleta.id_boleta, producto.id_producto, producto.cantidad, producto.precio]);
 
         // --- AQUÍ actualizo el stock
-        const actualizarStock = "UPDATE productos SET stock = stock - $1 WHERE id = $2";
-        await pool.query(actualizarStock, [producto.cantidad, producto.id]);
+        const actualizarStock = "UPDATE productos SET stock = stock - $1 WHERE id_producto = $2";
+        await pool.query(actualizarStock, [producto.cantidad, producto.id_producto]);
     }
     
     return nuevaBoleta;
@@ -73,5 +73,5 @@ module.exports = {
     obtenerProductos,
     obtenerProductoPorId,
     generarBoleta,
-    obtenerBoletasPorUsuario 
+    obtenerBoletasPorUsuario
 };
