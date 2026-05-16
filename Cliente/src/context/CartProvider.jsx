@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { CartContext } from "./CartContext";
+import clienteAxios from "../api/api";
 
 export const CartProvider = ({ children }) => {
+  // Estado original para el carrito con localStorage
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -9,12 +11,32 @@ export const CartProvider = ({ children }) => {
 
   const [totalCart, setTotalCart] = useState(0);
 
+  // 2. NUEVO ESTADO: Aquí guardaremos los productos que vienen de la base de datos
+  const [productosLista, setProductosLista] = useState([]);
+
+  // 3. NUEVA FUNCIÓN: Conexión con la API de Render/Neon para traer el catálogo
+  const obtenerProductos = async () => {
+    try {
+      const res = await clienteAxios.get('/productos');
+      setProductosLista(res.data.result || res.data);
+    } catch (error) {
+      console.error("Error al cargar el catálogo desde el Backend:", error);
+    }
+  };
+
+  // 4. NUEVO EFFECT: Llama a los productos automáticamente al abrir la aplicación
+  useEffect(() => {
+    obtenerProductos();
+  }, []);
+
+  // Efecto para actualizar totales y localStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
     const newTotal = cart.reduce((acc, item) => acc + item.precio * item.count, 0);
     setTotalCart(newTotal);
   }, [cart]);
 
+  // Función para añadir al carrito
   const addToCart = (product) => {
     const foundProduct = cart.find((item) => item.id_producto === product.id_producto);
     if (foundProduct) {
@@ -28,6 +50,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Función para remover del carrito
   const removeFromCart = (id_producto) => {
     const foundProduct = cart.find((item) => item.id_producto === id_producto);
     if (!foundProduct) return;
@@ -42,10 +65,21 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Función original para vaciar el carrito
   const clearCart = () => setCart([]);
 
   return (
-    <CartContext.Provider value={{ cart, setCart, addToCart, removeFromCart, totalCart, clearCart }}>
+    <CartContext.Provider 
+      value={{ 
+        cart, 
+        setCart, 
+        addToCart, 
+        removeFromCart, 
+        totalCart, 
+        clearCart,
+        productosLista // <-- lista de productos real para que Products.jsx la use
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

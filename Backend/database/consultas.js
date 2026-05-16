@@ -1,9 +1,9 @@
-const pool = require('./connection');
-const bcrypt = require('bcryptjs');
+import { pool } from './connection.js';
+import bcrypt from 'bcryptjs';
 
 // --- USUARIOS ---
 
-const registrarUsuario = async (usuario) => {
+export const registrarUsuario = async (usuario) => {
     let { nombre, apellido, email, password, rut, telefono, region, comuna } = usuario;
     const passwordEncriptada = bcrypt.hashSync(password, 10);
     const values = [nombre, apellido, email, passwordEncriptada, rut, telefono, region, comuna];
@@ -12,14 +12,14 @@ const registrarUsuario = async (usuario) => {
     return rows[0];
 };
 
-const obtenerUsuarioPorEmail = async (email) => {
+export const obtenerUsuarioPorEmail = async (email) => {
     const consulta = "SELECT * FROM usuarios WHERE email = $1";
     const { rows } = await pool.query(consulta, [email]);
     return rows[0];
 };
 
-// NUEVA: Para mostrar los datos en la página de "Mi Perfil" sin la contraseña
-const obtenerPerfilUsuario = async (email) => {
+// Para mostrar los datos en la página de "Mi Perfil" sin la contraseña
+export const obtenerPerfilUsuario = async (email) => {
     const consulta = "SELECT nombre, apellido, email, rut, telefono, region, comuna FROM usuarios WHERE email = $1";
     const { rows } = await pool.query(consulta, [email]);
     return rows[0];
@@ -27,21 +27,28 @@ const obtenerPerfilUsuario = async (email) => {
 
 // --- PRODUCTOS ---
 
-// NUEVA: Para mostrar los productos en el Home/Tienda
-const obtenerProductos = async () => {
-    const consulta = "SELECT * FROM productos";
-    const { rows } = await pool.query(consulta);
-    return rows;
+// Para mostrar los productos en el Home/Tienda
+export const obtenerProductos = async () => {
+    try {
+        const consulta = "SELECT * FROM productos";
+        const { rows } = await pool.query(consulta);
+        return rows;
+    } catch (error) {
+        console.error("Error en la consulta SQL obtenerProductos:", error);
+        throw error;
+    }
 };
 
-// NUEVA: Para ver el detalle de un solo producto
-const obtenerProductoPorId = async (id) => {
+// Para ver el detalle de un solo producto
+export const obtenerProductoPorId = async (id) => {
     const consulta = "SELECT * FROM productos WHERE id_producto = $1";
     const { rows } = await pool.query(consulta, [id]);
     return rows[0];
 };
 
-const generarBoleta = async (id_usuario, productos, total) => {
+// --- COMPRAS / BOLETAS ---
+
+export const generarBoleta = async (id_usuario, productos, total) => {
     // 1. Insertar en la tabla boletas
     const consultaBoleta = "INSERT INTO boletas (id_usuario, total) VALUES ($1, $2) RETURNING *";
     const { rows } = await pool.query(consultaBoleta, [id_usuario, total]);
@@ -53,25 +60,16 @@ const generarBoleta = async (id_usuario, productos, total) => {
         const consultaDetalle = "INSERT INTO boleta_items (id_boleta, id_producto, cantidad, precio_unitario) VALUES ($1, $2, $3, $4)";
         await pool.query(consultaDetalle, [nuevaBoleta.id_boleta, producto.id_producto, producto.cantidad, producto.precio]);
 
-        // --- AQUÍ actualizo el stock
+        // Actualizar el stock
         const actualizarStock = "UPDATE productos SET stock = stock - $1 WHERE id_producto = $2";
         await pool.query(actualizarStock, [producto.cantidad, producto.id_producto]);
     }
     
     return nuevaBoleta;
 };
-const obtenerBoletasPorUsuario = async (id_usuario) => {
+
+export const obtenerBoletasPorUsuario = async (id_usuario) => {
     const consulta = "SELECT * FROM boletas WHERE id_usuario = $1 ORDER BY fecha DESC";
     const { rows } = await pool.query(consulta, [id_usuario]);
     return rows;
-};
-
-module.exports = { 
-    registrarUsuario, 
-    obtenerUsuarioPorEmail, 
-    obtenerPerfilUsuario,
-    obtenerProductos,
-    obtenerProductoPorId,
-    generarBoleta,
-    obtenerBoletasPorUsuario
 };

@@ -1,15 +1,20 @@
-import { useSearchParams } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
-import { productos } from '../data/products'
-import ProductCard from '../components/ProductCard'
+import { useSearchParams } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import ProductCard from '../components/ProductCard';
 
 export default function Products() {
-  const [searchParams] = useSearchParams()
-  const categoriaActiva = searchParams.get('categoria')
+  const [searchParams] = useSearchParams();
+  const categoriaActiva = searchParams.get('categoria');
+
+  const { productosLista } = useContext(CartContext);
+
+  const baseProductos = Array.isArray(productosLista) ? productosLista : [];
 
   const productosFiltrados = categoriaActiva
-    ? productos.result.filter((p) => p.categoria === categoriaActiva)
-    : productos.result
+    ? baseProductos.filter((p) => p.categoria === categoriaActiva)
+    : baseProductos;
 
   return (
     <Container className="py-4">
@@ -26,5 +31,5 @@ export default function Products() {
         ))}
       </Row>
     </Container>
-  )
+  );
 }
