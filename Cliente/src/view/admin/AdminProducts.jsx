@@ -1,9 +1,30 @@
-import AdminSidebar from '../../components/AdminSidebar'
-import { Table, Button } from 'react-bootstrap'
-import { productos } from '../../data/products'
-import '../admin/AdminHome.css'
+import { useEffect, useState } from 'react';
+import AdminSidebar from '../../components/AdminSidebar';
+import { Table, Button } from 'react-bootstrap';
+import clienteAxios from '../../api/api';
+import '../admin/AdminHome.css';
 
 export default function AdminProducts() {
+
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+
+    const obtenerProductos = async () => {
+
+      try {
+        const response = await clienteAxios.get('/productos');
+        setProductos(response.data);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    obtenerProductos();
+
+  }, []);
+
   return (
     <div className="admin-page">
       <AdminSidebar />
