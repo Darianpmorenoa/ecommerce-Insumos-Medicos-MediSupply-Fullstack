@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../database/conection');
+const pool = require('../database/connection');
 
 // 1. Obtener todas las categorías (Público)
 router.get('/', async (req, res) => {

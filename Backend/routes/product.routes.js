@@ -1,72 +1,62 @@
 const express = require('express');
 const productsRouter = express.Router();
-const {getAllProducts, getProductById, createProduct, deleteProduct, modifyProduct} = require('../controllers/productController');
+const { 
+    getAllProducts, 
+    getProductById, 
+    createProduct, 
+    deleteProduct, 
+    modifyProduct 
+} = require('../controllers/productController');
 const { validateToken, verifyAdmin } = require('../middlewares/auth');
 
-
-// GET GENERAL
-productsRouter.get("/", async (req, res) => {
-
-    const products = await getAllProducts();
-    res.json(products);
-
+// 1. GET GENERAL (Obtener todos los productos)
+productsRouter.get("/", async (req, res, next) => {
+    try {
+        await getAllProducts(req, res);
+    } catch (error) {
+        console.error("Error en ruta GET /:", error.message);
+        res.status(500).json({ error: "Error interno al obtener los productos." });
+    }
 });
 
-
-// GET POR ID
+// 2. GET POR ID (Obtener un producto específico)
 productsRouter.get("/:id", async (req, res) => {
-
-    const product = await getProductById(req.params.id);
-    res.json(product);
-
+    try {
+        await getProductById(req, res);
+    } catch (error) {
+        console.error("Error en ruta GET /:id:", error.message);
+        res.status(500).json({ error: "Error interno al obtener el producto." });
+    }
 });
 
-
-// CREATE PRODUCTO
+// 3. CREATE PRODUCTO (Crear producto - Solo Admin)
 productsRouter.post("/", validateToken, verifyAdmin, async (req, res) => {
-
-    const product = await createProduct(req.body);
-    res.status(201).json(
-        {
-        message: "Producto creado con éxito!",
-        data: product
+    try {
+        await createProduct(req, res);
+    } catch (error) {
+        console.error("Error en ruta POST /:", error.message);
+        res.status(500).json({ error: "Error interno al crear el producto." });
     }
-);
-
 });
 
-
-// DELETE PRODUCTO
+// 4. DELETE PRODUCTO (Eliminar producto - Solo Admin)
 productsRouter.delete("/:id", validateToken, verifyAdmin, async (req, res) => {
-
-    const result = await deleteProduct(req.params.id);
-    res.json(
-        {
-        message: "Producto eliminado con éxito!",
-        data: result
+    try {
+        await deleteProduct(req, res);
+    } catch (error) {
+        console.error("Error en ruta DELETE /:id:", error.message);
+        res.status(500).json({ error: "Error interno al eliminar el producto." });
     }
-);
-
 });
 
-
-// UPDATE PRODUCTO
+// 5. UPDATE PRODUCTO (Modificar producto - Solo Admin)
 productsRouter.put("/:id", validateToken, verifyAdmin, async (req, res) => {
-
-    const product = await modifyProduct(
-        req.params.id,
-        req.body
-    );
-
-    res.json(
-        {
-        message: "Producto actualizado con éxito!",
-        data: product
+    try {
+        await modifyProduct(req, res);
+    } catch (error) {
+        console.error("Error en ruta PUT /:id:", error.message);
+        res.status(500).json({ error: "Error interno al actualizar el producto." });
     }
-);
-
 });
-
 
 module.exports = productsRouter;
-

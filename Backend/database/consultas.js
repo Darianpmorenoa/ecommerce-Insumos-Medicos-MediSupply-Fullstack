@@ -1,4 +1,4 @@
-const pool = require('./conection');
+const pool = require('./connection');
 const bcrypt = require('bcryptjs');
 
 // --- USUARIOS ---

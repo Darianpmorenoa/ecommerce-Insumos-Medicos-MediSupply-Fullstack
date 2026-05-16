@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const pool = require('./database/conection');
-const routes = require('./routes');
+const pool = require('./database/connection');
+const routes = require('./routes/index');
 
 const app = express();
 
