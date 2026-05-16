@@ -1,12 +1,36 @@
+import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
 import Hero from '../components/Hero'
 import ProductCard from '../components/ProductCard'
-import { productos } from '../data/products'
+import clienteAxios from '../api/api';
 import { Link } from "react-router-dom";
 
-const productosDestacados = productos.result.slice(0, 4);
 
 function Home() {
+
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+
+    const obtenerProductos = async () => {
+
+      try {
+        const response = await clienteAxios.get('/productos');
+        setProductos(response.data);
+
+      } catch (error) {
+        console.error(error);
+
+      }
+    };
+
+    obtenerProductos();
+
+  }, []);
+
+
+const productosDestacados = productos.slice(0, 4);
+
   return (
     <main>
       <Hero />
@@ -43,3 +67,4 @@ function Home() {
 }
 
 export default Home;
+

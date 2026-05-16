@@ -1,14 +1,34 @@
 import { useParams, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Button, Badge, Card, ListGroup } from "react-bootstrap";
-import { productos } from "../data/products"; 
+import clienteAxios from "../api/api"; 
 import { CartContext } from "../context/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams(); 
   const { addToCart } = useContext(CartContext);
-  const product = productos.result.find((p) => p.id_producto === Number(id));
+  const [product, setProduct] = useState(null);
 
+
+ useEffect(() => {
+
+    const obtenerProducto = async () => {
+      
+      try {
+        const response = await clienteAxios.get(`/productos/${id}`);
+        setProduct(response.data);
+
+      } catch (error) {
+        console.error(error);
+
+      }
+    };
+
+    obtenerProducto();
+
+  }, [id]);
+
+  
   if (!product) {
     return (
       <Container className="text-center py-5">
