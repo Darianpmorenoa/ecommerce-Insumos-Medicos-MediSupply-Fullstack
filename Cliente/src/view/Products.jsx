@@ -13,8 +13,11 @@ export default function Products() {
   const baseProductos = Array.isArray(productosLista) ? productosLista : [];
 
   const productosFiltrados = categoriaActiva
-    ? baseProductos.filter((p) => p.categoria === categoriaActiva)
-    : baseProductos;
+  ? baseProductos.filter(
+      (p) => String(p.id_categoria) === String(categoriaActiva))
+  : baseProductos;
+
+  console.log(productosLista);
 
   return (
     <Container className="py-4">
