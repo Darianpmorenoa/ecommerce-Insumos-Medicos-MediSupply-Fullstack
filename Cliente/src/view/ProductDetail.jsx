@@ -92,7 +92,7 @@ const ProductDetail = () => {
               </ListGroup.Item>
               <ListGroup.Item className="d-flex justify-content-between">
                 <span className="text-muted">Categoría</span>
-                <span className="fw-bold">Equipamiento Médico</span>
+                <span className="fw-bold">{product.nombre_categoria || product.id_categoria}</span>
               </ListGroup.Item>
               <ListGroup.Item className="d-flex justify-content-between">
                 <span className="text-muted">Garantía</span>

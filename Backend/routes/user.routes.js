@@ -12,4 +12,7 @@ router.get('/perfil', validateToken, userController.obtenerPerfil);
 // 3. Ver todos los usuarios (Privado - Solo para pruebas o Admin)
 router.get('/', validateToken, userController.obtenerUsuarios);
 
+// 4. Login de usuarios (Público)
+router.post('/login', userController.loginUsuario);
+
 module.exports = router;

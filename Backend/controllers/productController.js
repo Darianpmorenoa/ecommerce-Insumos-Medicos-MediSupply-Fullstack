@@ -3,7 +3,12 @@ const pool = require('../database/connection');
 // 1. Obtener todos los productos (Para la tienda)
 const getAllProducts = async (req, res) => {
     try {
-        const query = `SELECT * FROM productos ORDER BY id_producto ASC`;
+        const query = `
+            SELECT p.*, c.nombre_categoria
+            FROM productos p
+            LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+            ORDER BY p.id_producto ASC
+        `;
         const result = await pool.query(query);
         res.status(200).json(result.rows);
     } catch (error) {
@@ -16,10 +21,14 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     try {
         const { id } = req.params;
-        // Corregido: id_producto -> id
-        const query = `SELECT * FROM productos WHERE id_producto = $1`;
+        const query = `
+            SELECT p.*, c.nombre_categoria
+            FROM productos p
+            LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+            WHERE p.id_producto = $1
+        `;
         const result = await pool.query(query, [id]);
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Producto no encontrado" });
         }

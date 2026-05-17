@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
+import clienteAxios from '../api/api';
 import './Register.css';
 
 export default function Register() {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
+    rut: '',
     telefono: '',
     email: '',
     password: '',
@@ -15,28 +17,38 @@ export default function Register() {
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      setError('Las contraseñas no coinciden');
       return;
     }
-    console.log(formData);
 
-    navigate('/login');
-};
+    try {
+      const { confirmPassword: _confirmPassword, ...datosEnvio } = formData;
+      await clienteAxios.post('/usuarios/registrar', datosEnvio);
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data || 'Error al registrar. Intenta de nuevo.');
+    }
+  };
 
   return (
     <div className="register">
       <div className="register-card">
         <h1>Registro</h1>
-        
+
+        {error && <p style={{ color: 'red', fontSize: '0.85rem' }}>{error}</p>}
+
         <form onSubmit={handleSubmit}>
           <div className="fila-inputs">
             <div className="input">
@@ -50,28 +62,31 @@ export default function Register() {
           </div>
 
           <div className="input">
-            <label>Teléfono</label>
-            <input type="tel" name="telefono" placeholder="Ej: +56...." onChange={handleChange} required />
+            <label>RUT</label>
+            <input type="text" name="rut" placeholder="Ej: 12345678-9" onChange={handleChange} required />
           </div>
 
           <div className="input">
-            <label>Email Address</label>
+            <label>Teléfono</label>
+            <input type="tel" name="telefono" placeholder="Ej: +56..." onChange={handleChange} required />
+          </div>
+
+          <div className="input">
+            <label>Email</label>
             <input type="email" name="email" placeholder="Ej: usuario@ejemplo.com" onChange={handleChange} required />
           </div>
 
           <div className="input">
             <label>Password</label>
             <div className="ojo">
-              <input 
-                type={showPass ? "text" : "password"} 
-                name="password" 
-                placeholder="Ej: ********" 
-                onChange={handleChange} 
-                required 
+              <input
+                type={showPass ? "text" : "password"}
+                name="password"
+                placeholder="Ej: ********"
+                onChange={handleChange}
+                required
               />
-              
-              <span className="ojo-icono" 
-              onClick={() => setShowPass(!showPass)}>
+              <span className="ojo-icono" onClick={() => setShowPass(!showPass)}>
                 {showPass ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -80,15 +95,14 @@ export default function Register() {
           <div className="input">
             <label>Confirme su Password</label>
             <div className="ojo">
-              <input 
-                type={showConfirmPass ? "text" : "password"} 
-                name="confirmPassword" 
-                placeholder="Ej: ********" 
-                onChange={handleChange} 
-                required 
+              <input
+                type={showConfirmPass ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Ej: ********"
+                onChange={handleChange}
+                required
               />
-              <span className="ojo-icono" 
-              onClick={() => setShowConfirmPass(!showConfirmPass)}>
+              <span className="ojo-icono" onClick={() => setShowConfirmPass(!showConfirmPass)}>
                 {showConfirmPass ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -98,7 +112,7 @@ export default function Register() {
         </form>
 
         <p className="login-cards">
-          ¿Ya tienes una cuenta? <Link to="/login" className="link">Inicia sesión acá</Link>
+          ¿Ya tienes cuenta? <Link to="/login" className="link">Inicia sesión acá</Link>
         </p>
       </div>
     </div>

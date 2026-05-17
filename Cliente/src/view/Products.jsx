@@ -7,17 +7,13 @@ import ProductCard from '../components/ProductCard';
 export default function Products() {
   const [searchParams] = useSearchParams();
   const categoriaActiva = searchParams.get('categoria');
-
   const { productosLista } = useContext(CartContext);
 
   const baseProductos = Array.isArray(productosLista) ? productosLista : [];
 
   const productosFiltrados = categoriaActiva
-  ? baseProductos.filter(
-      (p) => String(p.id_categoria) === String(categoriaActiva))
-  : baseProductos;
-
-  console.log(productosLista);
+    ? baseProductos.filter((p) => p.nombre_categoria === categoriaActiva)
+    : baseProductos;
 
   return (
     <Container className="py-4">

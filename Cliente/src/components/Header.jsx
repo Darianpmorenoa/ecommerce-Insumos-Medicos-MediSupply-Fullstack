@@ -46,7 +46,7 @@ function Header() {
                 Todos los productos
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              {["Salud", "Terapia", "Higiene", "Diagnóstico", "Quirófano"].map(
+              {["Salud", "Terapia", "Higiene", "Diagnostico", "Quirofano"].map(
                 (cat) => (
                   <NavDropdown.Item
                     key={cat}
