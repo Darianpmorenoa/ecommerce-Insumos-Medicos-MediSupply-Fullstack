@@ -1,14 +1,15 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+import userRoutes from './user.routes.js';
+import productRoutes from './product.routes.js';
+import orderRoutes from './order.routes.js';
+import categoryRoutes from './category.routes.js'; 
 
-const userRoutes = require('./user.routes');
-const productRoutes = require('./product.routes');
-const orderRoutes = require('./order.routes');
-const categoryRoutes = require('./category.routes'); 
+const router = Router();
 
+// Enlaces a los endpoints de la API
 router.use('/usuarios', userRoutes);
 router.use('/productos', productRoutes);
-router.use('/ordenes', orderRoutes); 
+router.use('/ordenes', orderRoutes);
 router.use('/categorias', categoryRoutes);
 
-module.exports = router;
+export default router;

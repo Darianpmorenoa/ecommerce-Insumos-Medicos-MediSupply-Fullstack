@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const orderController = require('../controllers/orderController');
-const { validateToken } = require('../middlewares/auth'); 
+import { Router } from 'express';
+import { crearBoleta, obtenerMisBoletas } from '../controllers/orderController.js';
+import { validateToken } from '../middlewares/auth.js';
+
+const router = Router();
 
 // 1. Ruta para crear una nueva boleta (POST /api/ordenes)
-router.post('/', validateToken, orderController.crearBoleta);
+router.post('/', validateToken, crearBoleta);
 
 // 2. Ruta para obtener el historial de boletas del usuario logueado (GET /api/ordenes)
-router.get('/', validateToken, orderController.obtenerMisBoletas);
+router.get('/', validateToken, obtenerMisBoletas);
 
-module.exports = router;
+export default router;

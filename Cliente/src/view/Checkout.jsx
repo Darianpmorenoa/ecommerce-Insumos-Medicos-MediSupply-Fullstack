@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
+import clienteAxios from '../api/api';
 import './Checkout.css';
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const { cart, total, clearCart } = useContext(CartContext);
   const [metodoPago, setMetodoPago] = useState('tarjeta');
+  const [loading, setLoading] = useState(false);
+  const [errorMensaje, setErrorMensaje] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-
-    if (metodoPago === 'tarjeta') {
-    console.log("Redirigiendo a Pasarela de Pago (Webpay/Stripe)...");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMensaje('');
     
-    alert("Redirigiendo a la pasarela de pago segura...");
-    navigate('/pago-tarjeta'); // <Suposicion que esta es la ruta
-  } 
-  
-  else if (metodoPago === 'transferencia') {
-    console.log("Mostrando datos de transferencia bancaria...");
-    alert("Pedido reservado. Te redirigiremos a los datos para la transferencia.");
-    navigate('/seleccionar-banco'); 
-  }
-    
+    if (!cart || cart.length === 0) {
+      setErrorMensaje('El carrito está vacío. Agrega insumos médicos antes de pagar.');
+      return;
+    }
 
-    alert("¡Pago procesado con éxito!");
-    navigate('/ThankYou'); 
+    setLoading(true);
+
+    try {
+      // Mapeamos los datos del carrito para que cuadren con la consulta SQL
+      const productosPayload = cart.map(item => ({
+        id_producto: item.id_producto,
+        cantidad: item.count || 1,
+        precio: item.precio
+      }));
+
+      const payload = {
+        productos: productosPayload,
+        total: total,
+        metodo_pago: metodoPago
+      };
+
+      // Petición POST protegida.
+      const response = await clienteAxios.post('/ordenes', payload);
+
+      if (response.status === 201 || response.data.ok) {
+        alert("🧾 ¡Pago procesado con éxito! Boleta guardada y stock actualizado en Neon.");
+        clearCart();
+        navigate('/ThankYou');
+      }
+    } catch (error) {
+      console.error("Error al registrar el checkout en Neon:", error);
+      setErrorMensaje(
+        error.response?.data?.message || 
+        'Hubo un problema de conexión con el servidor al registrar tu compra.'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,7 +60,8 @@ export default function Checkout() {
       <div className="checkout-form-section">
         <h2>Finalizar Compra</h2>
         
-    
+        {errorMensaje && <div className="checkout-alert-error" style={{color: 'red', marginBottom: '15px'}}>{errorMensaje}</div>}
+
         <form className="checkout-form" onSubmit={handleSubmit}>
           
           <section className="form-group">
@@ -46,7 +75,6 @@ export default function Checkout() {
               <input type="text" placeholder="Ciudad / Comuna" required />
               <input type="text" placeholder="Región" required />
             </div>
-            
             <input type="tel" placeholder="Teléfono de contacto" required />
           </section>
 
@@ -54,33 +82,39 @@ export default function Checkout() {
             <h3>2. Método de Pago</h3>
             <div className="payment-options">
               <label className={`payment-card ${metodoPago === 'tarjeta' ? 'active' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  checked={metodoPago === 'tarjeta'} 
-                  onChange={() => setMetodoPago('tarjeta')} 
-                  required 
+                <input
+                  type="radio"
+                  name="payment"
+                  checked={metodoPago === 'tarjeta'}
+                  onChange={() => setMetodoPago('tarjeta')}
+                  required
                 />
                 Tarjeta de Crédito/Débito
               </label>
+
               <label className={`payment-card ${metodoPago === 'transferencia' ? 'active' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  checked={metodoPago === 'transferencia'} 
-                  onChange={() => setMetodoPago('transferencia')} 
+                <input
+                  type="radio"
+                  name="payment"
+                  checked={metodoPago === 'transferencia'}
+                  onChange={() => setMetodoPago('transferencia')}
                 />
                 Transferencia Bancaria
               </label>
             </div>
           </section>
 
-        
-          <button type="submit" className="confirmar-btn">Pagar Ahora</button>
+          <button type="submit" className="confirmar-btn" disabled={loading}>
+            {loading ? 'Procesando Compra...' : `Pagar Ahora ($${total?.toLocaleString('es-CL')})`}
+          </button>
         </form>
       </div>
 
       <aside className="checkout-summary-section">
+        <h3>Resumen</h3>
+        <p>Total de productos: {cart?.length || 0}</p>
+        <hr />
+        <h4>Total a pagar: <strong>${total?.toLocaleString('es-CL')}</strong></h4>
       </aside>
     </div>
   );
